@@ -55,13 +55,13 @@ const getPositionsToCheck = direction => ({
 		{ x: -1, y: -1 },
 		{ x: -1, y: 0 },
 		{ x: -1, y: 1 },
-		{ x: 0, y: 1 },
+		{ x: 0, y: -1 },
 	],
 	down: [
 		{ x: 1, y: -1 },
 		{ x: 1, y: 0 },
 		{ x: 1, y: 1 },
-		{ x: 0, y: -1 },
+		{ x: 0, y: 1 },
 	],
 	left: [
 		{ x: -1, y: -1 },
@@ -77,19 +77,8 @@ const getPositionsToCheck = direction => ({
 	],
 }[direction]);
 
-const positionsToCheck = [
-	{ x: -1, y: -1 },
-	{ x: 0, y: -1 },
-	{ x: 1, y: -1 },
-	{ x: -1, y: 0 },
-	{ x: 1, y: 0 },
-	{ x: -1, y: 1 },
-	{ x: 0, y: 1 },
-	{ x: 1, y: 1 },
-];
-
 const sumAdjescent = (spiral, position, direction) => {
-	// const positionsToCheck = getPositionsToCheck(direction);
+	const positionsToCheck = getPositionsToCheck(direction);
 	return positionsToCheck.reduce((sum, pos) => {
 		const element = getElementAt(spiral, {
 			x: position.x + pos.x,

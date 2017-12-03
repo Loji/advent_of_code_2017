@@ -83,17 +83,18 @@ const generateUlam = (
 });
 
 const computeSteps = element => {
-	let steps = 0;
 	generateUlam(element).then(ulam => {
-		ulam.forEach((row, rowIndex) => {
-			row.forEach((cell, cellIndex) => {
-				if (element === cell) {
-					steps = Math.abs(rowIndex) + Math.abs(cellIndex);
-				}
-			})
-		});
-
-		console.log(`Steps for ${element} equals ${steps}`);
+		try { 
+			ulam.forEach((row, rowIndex) => {
+				row.forEach((cell, cellIndex) => {
+					if (element === cell) {
+						throw cell;
+					}
+				})
+			});
+		} catch (steps) {
+			console.log(`Steps for ${element} equals ${steps}`);
+		}
 	});
 };
 

@@ -27,12 +27,14 @@ const findConnectionTo = (num, alreadyFound = []) => {
 
 	connections[num].forEach(el => {
 		if (alreadyFound.indexOf(el) === -1) {
-			newConnections = [ ...newConnections, findConnectionTo(el, alreadyFound) ];
+			newConnections = [ ...newConnections, ...findConnectionTo(el, alreadyFound) ];
 		}
 	});
 
 	return [...alreadyFound, ...newConnections];
 }
+
+const findUnique = array => array.filter((val, index, arr) => arr.indexOf(val) === index);
 
 require('fs').readFile('input', function(err, data) {
 	if (err) throw err;
@@ -43,5 +45,15 @@ require('fs').readFile('input', function(err, data) {
 		connectedTo.forEach(right => addConnection(left, right))
 	});
 
-	console.log(findConnectionTo('0').filter((val, index, arr) => arr.indexOf(val) === index).length - 1);
+	const group0 = findUnique(findConnectionTo('0'));
+	console.log(`Group with 0 contains ${group0.length} elements`);
+
+	let leftGroups = Object.keys(connections).filter(val => group0.indexOf(val) === -1);
+	let groups = 1;
+	while (leftGroups.length > 0) {
+		const nextgroup = findConnectionTo(leftGroups[0]);
+		leftGroups = findUnique(leftGroups.filter(val => nextgroup.indexOf(val) === -1));
+		groups++;
+	}
+	console.log(`There are ${groups} groups`);
 });

@@ -63,8 +63,6 @@ const findBadWeigth = (towerTree, weigth = null) => {
 	}
 };
 
-
-
 require('fs').readFile('input', function(err, data) {
 	if (err) throw err;
 	const lines = data.toString().split('\n');
